@@ -1,0 +1,46 @@
+{
+  "kind": "bnbloc.mcp.package/v1",
+  "contract": "bnbloc.mcp.contract/v1",
+  "name": "mysql",
+  "version": "0.1.0",
+  "publisher": "bnbloc",
+  "description": "Query the MySQL databases you connect, as you. Your agent names a connection by its alias and runs SQL: a read runs at once, anything that changes data waits for your click on your own computer. You type each database password on a page on your own computer; the agent, the room and the logs never see it. Needs your agent to run sandboxed, unless your organization allows otherwise.",
+  "runtime": "stdio",
+  "mcp": {
+    "tools": [
+      {
+        "name": "mysql_connections"
+      },
+      {
+        "name": "mysql_describe"
+      },
+      {
+        "name": "mysql_query"
+      }
+    ],
+    "stdio": {
+      "args": [],
+      "placement": "host",
+      "privatePaths": [
+        "bnbloc-mysql"
+      ]
+    }
+  },
+  "settings": [
+    {
+      "key": "unsandboxedPolicy",
+      "label": "When the agent is not sandboxed",
+      "help": "refuse (default): do nothing unless the agent is sandboxed. allow-with-warning: work, and warn once that the agent can read your saved passwords. Neither stops a hostile agent on the host; only the sandbox does. Borrowed agents are always refused.",
+      "type": "choice",
+      "options": [
+        "refuse",
+        "allow-with-warning"
+      ],
+      "default": "refuse",
+      "scope": "org",
+      "deliver": {
+        "env": "BNBLOC_MYSQL_UNSANDBOXED_POLICY"
+      }
+    }
+  ]
+}
