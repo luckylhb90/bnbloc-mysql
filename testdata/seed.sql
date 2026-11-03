@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS sales;
+USE sales;
+DROP TABLE IF EXISTS orders; DROP TABLE IF EXISTS big;
+CREATE TABLE orders (id INT PRIMARY KEY, customer VARCHAR(40), total DECIMAL(10,2), note TEXT);
+INSERT INTO orders VALUES (1,'acme',10.50,'first'),(2,'globex',99.99,NULL),(3,'initech',5.00,'it''s fine');
+CREATE TABLE big (n INT PRIMARY KEY, pad VARCHAR(100));
+INSERT INTO big WITH RECURSIVE s(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM s WHERE n < 1000) SELECT n, REPEAT('x', 90) FROM s;
+CREATE USER IF NOT EXISTS 'report'@'%' IDENTIFIED BY 'report-pw';
+GRANT SELECT ON sales.* TO 'report'@'%';
+CREATE USER IF NOT EXISTS 'writer'@'%' IDENTIFIED BY 'writer-pw';
+GRANT ALL ON sales.* TO 'writer'@'%';
+FLUSH PRIVILEGES;
